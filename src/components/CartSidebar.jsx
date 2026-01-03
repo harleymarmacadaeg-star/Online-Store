@@ -4,35 +4,36 @@ import { useNavigate } from 'react-router-dom';
 export default function CartSidebar({ isOpen, onClose, cart = [], onUpdateQuantity, onRemove, onClearCart }) {
   const navigate = useNavigate();
   
-  // Early return if sidebar is closed to save performance
+  // Performance optimization: prevent rendering logic if sidebar is closed
   if (!isOpen) return null;
 
   const currentItems = Array.isArray(cart) ? cart : [];
   const total = currentItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
 
   const handleMessengerCheckout = () => {
-    // Generates a clean list of items for the message
+    // Generates a clean list of items for the message body
     const itemSummary = currentItems
       .map(item => `• ${item.quantity}x ${item.name} (${item.variation_name || 'Standard'}) - ₱${item.price.toLocaleString()}`)
       .join('\n');
 
+    // Encode the message to be URL-safe
     const message = encodeURIComponent(
       `Hello HJM! I would like to order from your Page:\n\n${itemSummary}\n\nTotal: ₱${total.toLocaleString()}\n\nIs this available?`
     );
 
-    // Using your Page username: Tabletenniskid
+    // Redirects to your specific Facebook Page Messenger: Tabletenniskid
     window.open(`https://m.me/Tabletenniskid?text=${message}`, '_blank');
   };
 
   return (
     <div className="fixed inset-0 z-[120] overflow-hidden">
-      {/* Backdrop */}
+      {/* Background Overlay */}
       <div className="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity" onClick={onClose} />
       
-      {/* Sidebar Panel */}
+      {/* Side Panel Container */}
       <div className="absolute inset-y-0 right-0 w-full max-w-md bg-white shadow-2xl flex flex-col transform transition-transform duration-300">
         
-        {/* Header */}
+        {/* Sidebar Header */}
         <div className="p-6 border-b flex items-center justify-between bg-white">
           <div className="flex flex-col">
             <div className="flex items-center gap-3">
@@ -56,7 +57,7 @@ export default function CartSidebar({ isOpen, onClose, cart = [], onUpdateQuanti
           </button>
         </div>
 
-        {/* Items List */}
+        {/* Scrollable Cart Items List */}
         <div className="flex-1 overflow-y-auto p-6">
           {currentItems.length === 0 ? (
             <div className="h-full flex flex-col items-center justify-center text-center space-y-6">
@@ -119,7 +120,7 @@ export default function CartSidebar({ isOpen, onClose, cart = [], onUpdateQuanti
           )}
         </div>
 
-        {/* Footer */}
+        {/* Action Footer */}
         {currentItems.length > 0 && (
           <div className="p-8 border-t border-gray-100 bg-white">
             <div className="flex justify-between items-center mb-6">
