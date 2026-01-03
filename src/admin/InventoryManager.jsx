@@ -141,7 +141,7 @@ export default function InventoryManager() {
   return (
     <div className="flex min-h-screen bg-[#f8fafc] font-sans text-slate-900">
       <aside className="w-64 bg-white border-r border-slate-200 p-6 flex flex-col gap-8">
-        <h1 className="text-xl font-black italic uppercase text-blue-600 tracking-tighter">RJPC SHOP</h1>
+        <h1 className="text-xl font-black italic uppercase text-blue-600 tracking-tighter">HJM-BUILD-IT ONLINE SHOP</h1>
         <button onClick={() => setView('list')} className={`flex items-center gap-3 px-4 py-3 rounded-xl font-bold text-sm transition-all ${view === 'list' ? 'bg-blue-50 text-blue-600' : 'text-slate-400 hover:bg-slate-50'}`}>
           <Package className="w-5 h-5" /> My Products
         </button>

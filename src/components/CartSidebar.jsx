@@ -43,7 +43,7 @@ export default function CartSidebar({ isOpen, onClose, cart = [], onUpdateQuanti
                 </button>
               )}
             </div>
-            <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest mt-1">Pinewoods Table Tennis Club</p>
+            <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest mt-1">HJM-Build-It Table Tennis Store</p>
           </div>
           <button onClick={onClose} className="p-2 hover:bg-gray-100 rounded-full"><X className="w-6 h-6" /></button>
         </div>
