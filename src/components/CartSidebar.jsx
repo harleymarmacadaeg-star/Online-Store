@@ -4,27 +4,32 @@ import { useNavigate } from 'react-router-dom';
 export default function CartSidebar({ isOpen, onClose, cart = [], onUpdateQuantity, onRemove, onClearCart }) {
   const navigate = useNavigate();
   
+  // Early return if sidebar is closed to save performance
+  if (!isOpen) return null;
+
   const currentItems = Array.isArray(cart) ? cart : [];
   const total = currentItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
 
   const handleMessengerCheckout = () => {
+    // Generates a clean list of items for the message
     const itemSummary = currentItems
       .map(item => `• ${item.quantity}x ${item.name} (${item.variation_name || 'Standard'}) - ₱${item.price.toLocaleString()}`)
       .join('\n');
 
     const message = encodeURIComponent(
-  `Hello HJM! I would like to order:\n\n${itemSummary}\n\nTotal: ₱${total.toLocaleString()}\n\nIs this available?`
-);
+      `Hello HJM! I would like to order from your Page:\n\n${itemSummary}\n\nTotal: ₱${total.toLocaleString()}\n\nIs this available?`
+    );
 
-// Updated to your personal profile username
-window.open(`https://m.me/harleymar.macadaeg?text=${message}`, '_blank');
-
-  if (!isOpen) return null;
+    // Using your Page username: Tabletenniskid
+    window.open(`https://m.me/Tabletenniskid?text=${message}`, '_blank');
+  };
 
   return (
     <div className="fixed inset-0 z-[120] overflow-hidden">
+      {/* Backdrop */}
       <div className="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity" onClick={onClose} />
       
+      {/* Sidebar Panel */}
       <div className="absolute inset-y-0 right-0 w-full max-w-md bg-white shadow-2xl flex flex-col transform transition-transform duration-300">
         
         {/* Header */}
@@ -46,14 +51,18 @@ window.open(`https://m.me/harleymar.macadaeg?text=${message}`, '_blank');
             </div>
             <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest mt-1">HJM-Build-It Table Tennis Store</p>
           </div>
-          <button onClick={onClose} className="p-2 hover:bg-gray-100 rounded-full"><X className="w-6 h-6" /></button>
+          <button onClick={onClose} className="p-2 hover:bg-gray-100 rounded-full">
+            <X className="w-6 h-6" />
+          </button>
         </div>
 
         {/* Items List */}
         <div className="flex-1 overflow-y-auto p-6">
           {currentItems.length === 0 ? (
             <div className="h-full flex flex-col items-center justify-center text-center space-y-6">
-              <div className="w-24 h-24 bg-blue-50 rounded-full flex items-center justify-center"><ShoppingBag className="w-12 h-12 text-blue-500" /></div>
+              <div className="w-24 h-24 bg-blue-50 rounded-full flex items-center justify-center">
+                <ShoppingBag className="w-12 h-12 text-blue-500" />
+              </div>
               <p className="text-gray-900 font-black uppercase text-sm tracking-widest">Your Bag is Empty</p>
             </div>
           ) : (
@@ -72,18 +81,20 @@ window.open(`https://m.me/harleymar.macadaeg?text=${message}`, '_blank');
                       </div>
                       <button 
                         onClick={() => onRemove(item.id, item.variation_id)}
-                        className="text-gray-300 hover:text-red-500 p-1"
+                        className="text-gray-300 hover:text-red-500 p-1 transition-colors"
                       >
                         <Trash2 className="w-4 h-4" />
                       </button>
                     </div>
                     
                     <div className="flex items-center justify-between mt-3">
-                      <p className="text-gray-900 font-black text-sm italic">₱{(item.price * item.quantity).toLocaleString()}</p>
+                      <p className="text-gray-900 font-black text-sm italic">
+                        ₱{(item.price * item.quantity).toLocaleString()}
+                      </p>
                       <div className="flex items-center border border-gray-200 rounded-xl bg-gray-50 overflow-hidden">
                         <button 
                           onClick={() => onUpdateQuantity(item.id, item.variation_id, -1)} 
-                          className="px-2 py-1 hover:bg-white border-r"
+                          className="px-2 py-1 hover:bg-white border-r transition-colors"
                         >
                           <Minus className="w-3 h-3" />
                         </button>
@@ -91,7 +102,11 @@ window.open(`https://m.me/harleymar.macadaeg?text=${message}`, '_blank');
                         <button 
                           disabled={item.quantity >= item.maxStock}
                           onClick={() => onUpdateQuantity(item.id, item.variation_id, 1)} 
-                          className={`px-2 py-1 border-l ${item.quantity >= item.maxStock ? 'bg-gray-100 text-gray-300 cursor-not-allowed' : 'hover:bg-white'}`}
+                          className={`px-2 py-1 border-l transition-colors ${
+                            item.quantity >= item.maxStock 
+                            ? 'bg-gray-100 text-gray-300 cursor-not-allowed' 
+                            : 'hover:bg-white'
+                          }`}
                         >
                           <Plus className="w-3 h-3" />
                         </button>
@@ -109,7 +124,9 @@ window.open(`https://m.me/harleymar.macadaeg?text=${message}`, '_blank');
           <div className="p-8 border-t border-gray-100 bg-white">
             <div className="flex justify-between items-center mb-6">
               <span className="text-gray-400 font-bold uppercase text-[10px] tracking-widest">Estimated Total</span>
-              <span className="font-black text-3xl text-gray-900 italic tracking-tighter">₱{total.toLocaleString()}</span>
+              <span className="font-black text-3xl text-gray-900 italic tracking-tighter">
+                ₱{total.toLocaleString()}
+              </span>
             </div>
             <div className="flex flex-col gap-3">
               <button 
