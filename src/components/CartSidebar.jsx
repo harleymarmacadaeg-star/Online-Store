@@ -13,10 +13,11 @@ export default function CartSidebar({ isOpen, onClose, cart = [], onUpdateQuanti
       .join('\n');
 
     const message = encodeURIComponent(
-      `Hello RJPC! I would like to order:\n\n${itemSummary}\n\nTotal: ₱${total.toLocaleString()}\n\nIs this available?`
-    );
-    window.open(`https://m.me/ron.jerry.5?text=${message}`, '_blank');
-  };
+  `Hello HJM! I would like to order:\n\n${itemSummary}\n\nTotal: ₱${total.toLocaleString()}\n\nIs this available?`
+);
+
+// Updated to your personal profile username
+window.open(`https://m.me/harleymar.macadaeg?text=${message}`, '_blank');
 
   if (!isOpen) return null;
 
