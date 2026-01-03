@@ -1,0 +1,4 @@
+[
+  { "id": 1, "name": "Razer L1 Blade", "price": 350, "category": "Blade", "brand": "Razer" },
+  { "id": 2, "name": "Reactor Rubber", "price": 250, "category": "Rubber", "brand": "Reactor" }
+]

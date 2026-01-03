@@ -1,0 +1,10 @@
+@import "tailwindcss";
+
+@theme {
+  --color-rjpc-blue: #004aad;
+  --color-rjpc-red: #cc0000;
+}
+
+body {
+  @apply bg-gray-50 text-gray-900;
+}
