@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 export default function CartSidebar({ isOpen, onClose, cart = [], onUpdateQuantity, onRemove, onClearCart }) {
   const navigate = useNavigate();
   
-  // Performance optimization: prevent rendering logic if sidebar is closed
+  // Performance optimization: Prevent rendering logic if the sidebar is closed
   if (!isOpen) return null;
 
   const currentItems = Array.isArray(cart) ? cart : [];
